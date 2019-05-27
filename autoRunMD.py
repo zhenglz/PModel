@@ -18,10 +18,16 @@ class ParseConstraints:
         self.cst_df = pd.DataFrame()
         self.forces = None
 
-    def read_restraints(self):
+    def read_restraints(self, usecols):
+        dat = []
         with open(self.cst_file) as lines:
+            for s in lines:
+                l = []
+                for i in usecols:
+                    l.append(s.split()[i])
+                dat.append(l)
 
-            self.cst_df = pd.DataFrame([x.split() for x in lines])
+        self.cst_df = pd.DataFrame(dat)
 
         return self
 
@@ -46,7 +52,7 @@ class ParseConstraints:
                 atom_index_k = int(items[2])
                 atom_index_l = int(items[3])
 
-                r0 = 3.1415 * float(items[-3]) / 180.0
+                r0 = 3.1415 * float(items[-2]) / 180.0
                 k = float(items[-1])
 
                 self.forces.addTorsion(atom_index_i, atom_index_j,
@@ -66,10 +72,10 @@ class ParseConstraints:
 
         return self
 
-def dihedral_restraints(rst="restraints.txt", use_cols=[0, 1, 2, 3, -2, -1], rst_type="dihedral"):
+def dihedral_restraints(rst="restraints.txt", use_cols=[0, 1, 2, 3, -3, -1], rst_type="dihedral"):
 
     restraints = ParseConstraints(rst_type, rst)
-    restraints.read_restraints()
+    restraints.read_restraints(use_cols)
     restraints.force_type()
     restraints.add_forces()
 
@@ -134,8 +140,18 @@ def run_NVT(pdb, system, out, log, nsteps, temperature, ):
     print("Simulation completed!")
 
 if __name__ == "__main__":
+    d = """A simple peptide simulation function with OpenMM.
+    Examples:
+        
+        >>> # run a quick MD simulation
+        >>> python autoRunMD.py --pdbin input.pdb -nsteps 10000
+        >>> # run MD simulation with GBSA method
+        >>> python autoRunMD.py --pdbin input.pdb --nsteps 10000 --gbsa True
+        >>> # run MD simulation with dihedral restraints
+        >>> python autoRunMD.py --pdbin input.pdb --nsteps 100000 --gbsa True --diherst restraints.txt
+    """
 
-    parser = argparse.ArgumentParser(description="A simple peptide simulation function. ",
+    parser = argparse.ArgumentParser(description=d,
                                      formatter_class=RawDescriptionHelpFormatter)
     parser.add_argument("--pdbin", default="input.pdb", type=str,
                         help="Input, string. A pdb file for simulation. \n"
