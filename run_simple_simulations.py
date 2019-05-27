@@ -38,10 +38,10 @@ def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
     integrator = LangevinIntegrator(temperature * u.kelvin, 1/u.picosecond, 0.002*u.picoseconds)
 
     # use cuda device
-    platform = mm.Platform.getPlatformByName('CUDA')
+    #platform = mm.Platform.getPlatformByName('CUDA:0')
 
     # create a simulation object, provide the topology and other information
-    simulation = Simulation(pdb.topology, system, integrator, platform)
+    simulation = Simulation(pdb.topology, system, integrator) #, platform)
 
     # provide the initial simulation start point
     simulation.context.setPositions(pdb.positions)
@@ -51,8 +51,8 @@ def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
 
     # output information
     simulation.reporters.append(PDBReporter(out, 1000))
-    simulation.reporters.append(StateDataReporter(log, 1000, step=True,
-                                potentialEnergy=True, temperature=True, progress=True))
+    simulation.reporters.append(StateDataReporter(log, 1000, step=False,
+                                potentialEnergy=True, temperature=True, progress=False))
 
     simulation.step(nsteps)
 
@@ -90,4 +90,4 @@ if __name__ == "__main__":
     run_NVT(pdb, args.pdbout, args.logfile, nsteps=args.nsteps, gbsa=args.gbsa, temperature=args.temperature)
 
     time_used = datetime.now() - now
-    print(time_used / 60.)
+    print("Total Time Usage: ", time_used)
