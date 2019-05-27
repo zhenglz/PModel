@@ -7,14 +7,18 @@ from datetime import datetime
 import argparse
 from argparse import RawDescriptionHelpFormatter
 
+
+def dihedral_restraints(rst="restraints.txt", use_cols=[0, 1, 2, 3, -2, -1]):
+    pass
+
+
 def process_pdb(inp, addH=False, ):
     # read in a pdb file
     pdb = PDBFile(inp)
 
     return pdb
 
-
-def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
+def prepare_system(pdb, gbsa=False):
 
     if gbsa:
 
@@ -33,6 +37,10 @@ def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
                                          nonbondedCutoff=1*u.nanometer,
                                          constraints=HBonds)
+
+    return system
+
+def run_NVT(pdb, system, out, log, nsteps, temperature, ):
 
     # setup MD integrator
     integrator = LangevinIntegrator(temperature * u.kelvin, 1/u.picosecond, 0.002*u.picoseconds)
@@ -87,7 +95,11 @@ if __name__ == "__main__":
     now = datetime.now()
 
     pdb = process_pdb(args.pdbin)
-    run_NVT(pdb, args.pdbout, args.logfile, nsteps=args.nsteps, gbsa=args.gbsa, temperature=args.temperature)
+
+    system = prepare_system(pdb, gbsa=args.gbsa)
+
+    run_NVT(pdb, system=system, out=args.pdbout, log=args.logfile,
+            nsteps=args.nsteps, temperature=args.temperature)
 
     time_used = datetime.now() - now
     print("Total Time Usage: ", time_used)
