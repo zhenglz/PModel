@@ -7,7 +7,7 @@ from datetime import datetime
 import argparse
 from argparse import RawDescriptionHelpFormatter
 
-def process_pdb(inp, addH, ):
+def process_pdb(inp, addH=False, ):
     # read in a pdb file
     pdb = PDBFile(inp)
 
