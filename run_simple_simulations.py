@@ -36,10 +36,6 @@ class ParseConstraints:
             self.forces.addPerTorsionParameter('r0',)
             self.forces.addPerTorsionParameter('k',)
 
-        else :
-
-            self.forces == mm.CustomAngleForce('0.5*k*(d-d0)^2')
-
         return self
 
     def add_forces(self):
@@ -130,7 +126,7 @@ def run_NVT(pdb, system, out, log, nsteps, temperature, ):
 
     # output information
     simulation.reporters.append(PDBReporter(out, 1000))
-    simulation.reporters.append(StateDataReporter(log, 1000, step=False,
+    simulation.reporters.append(StateDataReporter(log, 1000, step=True,
                                 potentialEnergy=True, temperature=True, progress=False))
 
     simulation.step(nsteps)
@@ -139,7 +135,8 @@ def run_NVT(pdb, system, out, log, nsteps, temperature, ):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="A simple peptide simulation function. ")
+    parser = argparse.ArgumentParser(description="A simple peptide simulation function. ",
+                                     formatter_class=RawDescriptionHelpFormatter)
     parser.add_argument("--pdbin", default="input.pdb", type=str,
                         help="Input, string. A pdb file for simulation. \n"
                              "Default is input.pdb")
@@ -167,6 +164,7 @@ if __name__ == "__main__":
 
     now = datetime.now()
 
+    # prepare the pdb file
     pdb = process_pdb(args.pdbin)
 
     if args.diherst is not None and os.path.exists(args.diherst):
@@ -174,8 +172,10 @@ if __name__ == "__main__":
     else:
         forces = None
 
+    # prepare the system
     system = prepare_system(pdb, gbsa=args.gbsa, add_forces=forces)
 
+    # run NVT simulations
     run_NVT(pdb, system=system, out=args.pdbout, log=args.logfile,
             nsteps=args.nsteps, temperature=args.temperature)
 
