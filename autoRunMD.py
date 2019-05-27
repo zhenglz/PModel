@@ -112,7 +112,11 @@ def prepare_system(pdb, gbsa=False, add_forces=None):
 
     return system
 
-def run_NVT(pdb, system, out, log, nsteps, temperature, ):
+def run_NPT(pdb, system, out, log, nsteps, temperature, ):
+
+    # Temperature coupling
+    system.addForce(AndersenThermostat(300*u.kelvin, 1/u.picosecond))
+    system.addForce(MonteCarloBarostat(1*u.bar, 300*u.kelvin))
 
     # setup MD integrator
     integrator = LangevinIntegrator(temperature * u.kelvin, 1/u.picosecond, 0.002*u.picoseconds)
@@ -194,7 +198,7 @@ if __name__ == "__main__":
     system = prepare_system(pdb, gbsa=args.gbsa, add_forces=forces)
 
     # run NVT simulations
-    run_NVT(pdb, system=system, out=args.pdbout, log=args.logfile,
+    run_NPT(pdb, system=system, out=args.pdbout, log=args.logfile,
             nsteps=args.nsteps, temperature=args.temperature)
 
     time_used = datetime.now() - now
