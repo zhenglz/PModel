@@ -61,22 +61,22 @@ def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="A simple peptide simulation function. ")
-    parser.add_argument("-f", "--pdbin", default="input.pdb", type=str,
+    parser.add_argument("--pdbin", default="input.pdb", type=str,
                         help="Input, string. A pdb file for simulation. \n"
                              "Default is input.pdb")
-    parser.add_argument("-o", "--pdbout", default="output.pdb", type=str,
+    parser.add_argument("--pdbout", default="output.pdb", type=str,
                         help="Output, string. A pdb file for output trajectory. \n"
                              "Default is output.pdb")
-    parser.add_argument("-g", "--logfile", default="output.log", type=str,
+    parser.add_argument("--logfile", default="output.log", type=str,
                         help="Output, string. A log file containing the simulation information. \n"
                              "Default is output.log")
-    parser.add_argument("-nt", "--nsteps", default=10000000, type=int,
+    parser.add_argument("--nsteps", default=10000000, type=int,
                         help="Input, int, optional. Number of simulation steps. A step is 0.002 ps.\n"
                              "Default is 10000000, which makes 20 ns.")
-    parser.add_argument("-gb", "--gbsa", default=True, type=bool,
+    parser.add_argument("--gbsa", default=True, type=bool,
                         help="Input, bool, optional. Whether run implict GBSA simulation.\n"
                              "Default is True. ")
-    parser.add_argument("-t", "--temperature", default=300, type=int,
+    parser.add_argument("--temperature", default=300, type=int,
                         help="Input, int, optional. The simulation temperature, default is 300 K. ")
 
     args = parser.parse_args()
@@ -86,8 +86,8 @@ if __name__ == "__main__":
 
     now = datetime.now()
 
-    pdb = process_pdb(args.f)
-    run_NVT(pdb, args.o, args.log, nsteps=args.nt, gbsa=args.gb, temperature=args.t)
+    pdb = process_pdb(args.pdbin)
+    run_NVT(pdb, args.pdbout, args.logfile, nsteps=args.nsteps, gbsa=args.gbsa, temperature=args.temperature)
 
     time_used = datetime.now() - now
     print(time_used / 60.)
