@@ -102,6 +102,10 @@ def prepare_system(pdb, gbsa=False, add_forces=None):
         # load force field
         forcefield = ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
 
+        modeller = Modeller(pdb.topology, pdb.positions)
+        modeller.addSolvent(forcefield, padding=1.0*u.nanometers, model="tip3p",
+                            ionicStrength=0.15*u.molar, negativeIon="Cl-", positiveIon="Na+")
+
         # prepare the simulation system by provide topology and algorithms for constraints
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
                                          nonbondedCutoff=1*u.nanometer,

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c3172e7c-6721-48c1-a3d8-c72b58b71986" name="Default Changelist" comment="" />
+    <list default="true" id="c3172e7c-6721-48c1-a3d8-c72b58b71986" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoRunMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoRunMD.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/autoRunMD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2806">
-              <caret line="172" column="95" lean-forward="true" selection-start-line="172" selection-start-column="95" selection-end-line="172" selection-end-column="95" />
+            <state relative-caret-position="548">
+              <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -154,7 +157,8 @@
     <MESSAGE value="add dihedral restraints" />
     <MESSAGE value="update readme" />
     <MESSAGE value="update restraint reading format" />
-    <option name="LAST_COMMIT_MESSAGE" value="update restraint reading format" />
+    <MESSAGE value="temperature coupling" />
+    <option name="LAST_COMMIT_MESSAGE" value="temperature coupling" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/simtk/__init__.py">
@@ -224,8 +228,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/autoRunMD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2806">
-          <caret line="172" column="95" lean-forward="true" selection-start-line="172" selection-start-column="95" selection-end-line="172" selection-end-column="95" />
+        <state relative-caret-position="548">
+          <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
