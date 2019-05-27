@@ -50,7 +50,7 @@ class ParseConstraints:
                 atom_index_k = int(items[2])
                 atom_index_l = int(items[3])
 
-                r0 = float(items[-3])
+                r0 = 3.1415 * float(items[-3]) / 180.0
                 k = float(items[-1])
 
                 self.forces.addTorsion(atom_index_i, atom_index_j,
