@@ -27,7 +27,7 @@ def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
 
     else:
         # load force field
-        forcefield = ForceField(['amber14-all.xml', 'amber14/tip3pfb.xml'])
+        forcefield = ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
 
         # prepare the simulation system by provide topology and algorithms for constraints
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
