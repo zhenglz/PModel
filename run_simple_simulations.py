@@ -21,7 +21,7 @@ def run_NVT(pdb, out, log, nsteps, gbsa, temperature, ):
         forcefield = ForceField('amber14-all.xml') #, 'amber14/tip3pfb.xml')
 
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
-                                         nonbondedCutoff=1*nanometer, constraints=HBonds,
+                                         nonbondedCutoff=1*u.nanometer, constraints=HBonds,
                                          implicitSolvent=app.GBn2,
                                          implicitSolventSaltConc=0.1*u.moles/u.liter,)
 
