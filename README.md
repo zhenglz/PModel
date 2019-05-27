@@ -1,4 +1,8 @@
 # PModel: Protein/Peptide modeling with full-atomic simulations in explict/implict environment
+
+# Author Information:
+### Zheng Liangzhen, zhenglz@outlook.com
+
 # 1. Installation
 Provide that you are using python 3.6, you should have the following python libraries:
 
