@@ -52,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/autoRunMD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
+            <state relative-caret-position="387">
+              <caret line="144" column="46" selection-start-line="144" selection-start-column="46" selection-end-line="144" selection-end-column="46" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -129,8 +129,7 @@
     <configuration />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="952" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1680" height="952" extended-state="1" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -158,7 +157,8 @@
     <MESSAGE value="update readme" />
     <MESSAGE value="update restraint reading format" />
     <MESSAGE value="temperature coupling" />
-    <option name="LAST_COMMIT_MESSAGE" value="temperature coupling" />
+    <MESSAGE value="add solvent method" />
+    <option name="LAST_COMMIT_MESSAGE" value="add solvent method" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/simtk/__init__.py">
@@ -228,8 +228,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/autoRunMD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
+        <state relative-caret-position="387">
+          <caret line="144" column="46" selection-start-line="144" selection-start-column="46" selection-end-line="144" selection-end-column="46" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>

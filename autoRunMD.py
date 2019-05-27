@@ -120,11 +120,14 @@ def prepare_system(pdb, gbsa=False, add_forces=None):
 
         return system, modeller
 
-def run_NPT(pdb, system, out, log, nsteps, temperature, ):
+def run_NPT(pdb, system, out, log, nsteps, temperature, gbsa=True):
+
+    if not gbsa:
+        system.addForce(MonteCarloBarostat(1*u.bar, 300*u.kelvin))
 
     # Temperature coupling
     system.addForce(AndersenThermostat(300*u.kelvin, 1/u.picosecond))
-    system.addForce(MonteCarloBarostat(1*u.bar, 300*u.kelvin))
+
 
     # setup MD integrator
     integrator = LangevinIntegrator(temperature * u.kelvin, 1/u.picosecond, 0.002*u.picoseconds)
@@ -145,8 +148,8 @@ def run_NPT(pdb, system, out, log, nsteps, temperature, ):
     simulation.reporters.append(PDBReporter(out, 1000))
     simulation.reporters.append(StateDataReporter(log, 1000, step=True,
                                 potentialEnergy=True, temperature=True,
-                                speed=False, density=True, progress=True,
-                                remainingTime=True,
+                                density=True, progress=True,
+                                remainingTime=True, speed=True,
                                 totalSteps=nsteps))
 
     simulation.step(nsteps)
@@ -207,7 +210,7 @@ if __name__ == "__main__":
 
     # run NVT simulations
     run_NPT(pdb, system=system, out=args.pdbout, log=args.logfile,
-            nsteps=args.nsteps, temperature=args.temperature)
+            nsteps=args.nsteps, temperature=args.temperature, gbsa=args.gbsa)
 
     time_used = datetime.now() - now
     print("Total Time Usage: ", time_used)
