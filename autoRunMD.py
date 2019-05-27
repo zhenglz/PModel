@@ -2,7 +2,6 @@ from simtk.openmm.app import *
 from simtk.openmm import *
 from simtk import openmm as mm
 from simtk import unit as u
-#from sys import stdout
 from datetime import datetime
 import pandas as pd
 import argparse
