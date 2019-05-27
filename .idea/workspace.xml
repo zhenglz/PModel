@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c3172e7c-6721-48c1-a3d8-c72b58b71986" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/autoRunMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoRunMD.py" afterDir="false" />
-    </list>
+    <list default="true" id="c3172e7c-6721-48c1-a3d8-c72b58b71986" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +49,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/autoRunMD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
-              <caret line="55" column="36" lean-forward="true" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+            <state relative-caret-position="2806">
+              <caret line="172" column="95" lean-forward="true" selection-start-line="172" selection-start-column="95" selection-end-line="172" selection-end-column="95" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -155,7 +153,8 @@
     <MESSAGE value="bool type rewrite" />
     <MESSAGE value="add dihedral restraints" />
     <MESSAGE value="update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="update readme" />
+    <MESSAGE value="update restraint reading format" />
+    <option name="LAST_COMMIT_MESSAGE" value="update restraint reading format" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/simtk/__init__.py">
@@ -225,8 +224,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/autoRunMD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="55" column="36" lean-forward="true" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        <state relative-caret-position="2806">
+          <caret line="172" column="95" lean-forward="true" selection-start-line="172" selection-start-column="95" selection-end-line="172" selection-end-column="95" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>

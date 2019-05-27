@@ -132,7 +132,10 @@ def run_NVT(pdb, system, out, log, nsteps, temperature, ):
     # output information
     simulation.reporters.append(PDBReporter(out, 1000))
     simulation.reporters.append(StateDataReporter(log, 1000, step=True,
-                                potentialEnergy=True, temperature=True, progress=False))
+                                potentialEnergy=True, temperature=True,
+                                speed=False, density=True, progress=True,
+                                remainingTime=True,
+                                totalSteps=nsteps))
 
     simulation.step(nsteps)
 
