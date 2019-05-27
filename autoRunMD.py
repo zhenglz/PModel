@@ -97,6 +97,10 @@ def prepare_system(pdb, gbsa=False, add_forces=None):
                                          nonbondedCutoff=1*u.nanometer, constraints=HBonds,
                                          implicitSolvent=app.GBn2,
                                          implicitSolventSaltConc=0.1*u.moles/u.liter,)
+        if add_forces is not None:
+            system.addForce(add_forces)
+
+        return system, pdb
 
     else:
         # load force field
@@ -107,14 +111,14 @@ def prepare_system(pdb, gbsa=False, add_forces=None):
                             ionicStrength=0.15*u.molar, negativeIon="Cl-", positiveIon="Na+")
 
         # prepare the simulation system by provide topology and algorithms for constraints
-        system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
+        system = forcefield.createSystem(modeller.topology, nonbondedMethod=PME,
                                          nonbondedCutoff=1*u.nanometer,
                                          constraints=HBonds)
 
-    if add_forces is not None:
-        system.addForce(add_forces)
+        if add_forces is not None:
+            system.addForce(add_forces)
 
-    return system
+        return system, modeller
 
 def run_NPT(pdb, system, out, log, nsteps, temperature, ):
 
@@ -199,7 +203,7 @@ if __name__ == "__main__":
         forces = None
 
     # prepare the system
-    system = prepare_system(pdb, gbsa=args.gbsa, add_forces=forces)
+    system, pdb = prepare_system(pdb, gbsa=args.gbsa, add_forces=forces)
 
     # run NVT simulations
     run_NPT(pdb, system=system, out=args.pdbout, log=args.logfile,
