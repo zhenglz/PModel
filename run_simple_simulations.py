@@ -73,7 +73,7 @@ if __name__ == "__main__":
     parser.add_argument("--nsteps", default=10000000, type=int,
                         help="Input, int, optional. Number of simulation steps. A step is 0.002 ps.\n"
                              "Default is 10000000, which makes 20 ns.")
-    parser.add_argument("--gbsa", default=True, type=bool,
+    parser.add_argument("--gbsa", type=lambda x: (str(x).lower() == "true"), default=False,
                         help="Input, bool, optional. Whether run implict GBSA simulation.\n"
                              "Default is True. ")
     parser.add_argument("--temperature", default=300, type=int,
