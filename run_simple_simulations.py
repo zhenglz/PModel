@@ -2,6 +2,9 @@ from simtk.openmm.app import *
 from simtk.openmm import *
 from simtk.unit import *
 #from sys import stdout
+from datetime import datetime
+
+now = datetime.now()
 
 # read in a pdb file
 pdb = PDBFile("input.pdb")
@@ -31,3 +34,6 @@ simulation.reporters.append(StateDataReporter("output.log", 1000, step=True,
 
 
 simulation.step(10000)
+
+time_used = datetime.now() - now
+print(time_used / 60.)
