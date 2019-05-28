@@ -125,8 +125,10 @@ class AutoRunMD :
 
         elif mode == "gbsa":
             self.generate_top(inpdb, outgro=outname, top="topol")
-            self.minimize(ingro=outname, outgro="em_"+outname, emmdp="em_sol.mdp")
-            self.md("em_"+outname, outgro="npt_"+outname, nptmdp="gbsa.mdp")
+            self.add_box(ingro=outname, outgro="box_"+outname)
+            self.minimize(ingro="box_"+outname, outgro="em_"+outname, emmdp="em_sol.mdp")
+            mdp = os.path.join(self.PROJECT_ROOT, "data/gbsa.mdp")
+            self.md("em_"+outname, outgro="npt_"+outname, nptmdp=mdp)
 
         return self
 
@@ -136,4 +138,4 @@ if __name__ == "__main__":
     out = sys.argv[2]
 
     app = AutoRunMD()
-    app.run_app(inp, out)
+    app.run_app(inp, out, 'gbsa')
