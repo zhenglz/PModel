@@ -112,15 +112,21 @@ class AutoRunMD :
 
         return self
 
-    def run_app(self, inpdb, outname):
+    def run_app(self, inpdb, outname, mode="solvated"):
 
-        self.generate_top(inpdb, outgro=outname, top="topol")
-        self.add_box(ingro=outname, outgro="box_"+outname)
-        self.add_solvent(ingro="box_"+outname, outgro="wat_"+outname, )
-        self.add_ions(ingro="wat_"+outname, outgro="ion_"+outname)
-        self.minimize(ingro="ion_"+outname, outgro="em_"+outname)
+        if mode == "solvated":
+            self.generate_top(inpdb, outgro=outname, top="topol")
+            self.add_box(ingro=outname, outgro="box_"+outname)
+            self.add_solvent(ingro="box_"+outname, outgro="wat_"+outname, )
+            self.add_ions(ingro="wat_"+outname, outgro="ion_"+outname)
+            self.minimize(ingro="ion_"+outname, outgro="em_"+outname)
 
-        self.md("em_"+outname, outgro="npt_"+outname)
+            self.md("em_"+outname, outgro="npt_"+outname)
+
+        elif mode == "gbsa":
+            self.generate_top(inpdb, outgro=outname, top="topol")
+            self.minimize(ingro=outname, outgro="em_"+outname, emmdp="em_sol.mdp")
+            self.md("em_"+outname, outgro="npt_"+outname, nptmdp="gbsa.mdp")
 
         return self
 
