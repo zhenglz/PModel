@@ -95,8 +95,8 @@ def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
         pdb = Modeller(pdb.topology, pdb.positions)
 
         if add_hydrogens:
-            pdb.addHydrogens(forcefield)
             pdb.addExtraParticles(forcefield)
+            pdb.addHydrogens(forcefield)
 
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
                                          nonbondedCutoff=1*u.nanometer, constraints=HBonds,
@@ -112,8 +112,8 @@ def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
 
         # add hydrogen atoms when necessary
         if add_hydrogens:
-            modeller.addHydrogens(forcefield)
             modeller.addExtraParticles(forcefield)
+            modeller.addHydrogens(forcefield)
 
         modeller.addSolvent(forcefield, padding=1.0*u.nanometers, model="tip3p",
                             ionicStrength=0.15*u.molar, negativeIon="Cl-", positiveIon="Na+")
