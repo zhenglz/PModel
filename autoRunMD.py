@@ -121,6 +121,8 @@ def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
                 use gromacs based method to generate a energy minimized pdb structure.
                 
                 Usage: 
+                autoRunMD_gmx.py -h
+                autoRunMD_gmx.py -f input.pdb -o output -gbsa False -product True
                 
                 """)
 

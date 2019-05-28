@@ -115,6 +115,28 @@ class AutoRunMD :
         return self
 
     def run_app(self, inpdb, outname, mode="solvated", production_run=True):
+        """
+        Run the simulation, the final step after data preparation.
+
+        Parameters
+        ----------
+        inpdb : str,
+            The input pdb file name.
+        outname : str,
+            The naming pattern of output files. For example, if you add water
+            to the simulation box, you will have wat_outname.gro file generated.
+        mode : str, default = 'solvated'
+            The simulation mode.
+            gbsa: run implict MD simulation without consider water effect, thus much faster but less accurate.
+            solvated: run explict water MD simulation with full-solvated water environmentm, it is slow but accurate.
+        production_run : bool, default = True
+            Run the product simulation.
+
+        Returns
+        -------
+            self : an instance of itself
+
+        """
 
         if mode == "solvated":
             self.generate_top(inpdb, outgro=outname, top="topol")
@@ -140,7 +162,17 @@ class AutoRunMD :
 if __name__ == "__main__":
 
     d = """
-    Run gromacs simulation in one-liner.
+    Run gromacs simulation in one-liner. 
+    
+    Note: the performance of gromacs simulations is less than openmm simulations.
+    
+    Examples:
+    
+        autoRunMD_gmx.py -h
+        
+        # run simulations with energy minimization followed by production run
+        autoRunMD_gmx.py -f input.pdb -o output -gbsa False -product True
+        
     """
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("-f", type=str, default="input.pdb",
@@ -164,5 +196,5 @@ if __name__ == "__main__":
     else:
         mode = "solvated"
 
-    app.run_app(inpdb=args.f, outname=args.o, gbsa=mode, production_run=args.product)
+    app.run_app(inpdb=args.f, outname=args.o, mode=mode, production_run=args.product)
 

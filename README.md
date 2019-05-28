@@ -15,6 +15,8 @@ Provide that you are using python 3.6, you should have the following python libr
 
     >>> conda install -c omnia -c conda-forge openmm
 
+## Next, you need to install gromacs (gmx) v5.0 and above versions if you wish to run simulations with gmx.
+
 # 2. Usage
 You could refer to the following examples to run the simulations:
 
