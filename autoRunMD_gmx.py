@@ -8,8 +8,8 @@ import subprocess as sp
 
 class AutoRunMD :
 
-    def __init__(self, topFile, taskName, grompp, mdrun, verbose=True, qsub=False):
-        self.top = topFile
+    def __init__(self):
+        self.top = ""
 
         self.PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -56,7 +56,7 @@ class AutoRunMD :
 
         return self
 
-    def add_solvent(self, ingro, outgro, intop, spc="spc903.gro"):
+    def add_solvent(self, ingro, outgro, intop="topol", spc="spc903.gro"):
 
         if not os.path.exists(spc):
             spc = os.path.join(self.PROJECT_ROOT, "data/spc903.gro")
@@ -66,7 +66,7 @@ class AutoRunMD :
 
         return self
 
-    def add_ions(self, emmdp, ingro, intop, outgro, ion_conc=0.15):
+    def add_ions(self, emmdp, ingro, outgro, intop="topol", ion_conc=0.15):
         if not os.path.exists(emmdp):
             emmdp = os.path.join(self.PROJECT_ROOT, "data/em_sol.mdp")
 
@@ -77,9 +77,11 @@ class AutoRunMD :
                ("addion", intop, outgro, ion_conc)
         self.run_suprocess(cmd2)
 
+        self.top = intop
+
         return self
 
-    def minimize(self, ingro, outgro, emmdp, intop, nt=4):
+    def minimize(self, ingro, outgro, emmdp, intop="topol", nt=4):
         if not os.path.exists(emmdp):
             emmdp = os.path.join(self.PROJECT_ROOT, "data/em_sol.mdp")
 
@@ -91,7 +93,7 @@ class AutoRunMD :
 
         return self
 
-    def md(self, ingro, outgro, nptmdp, intop, nt=4, restraints=False):
+    def md(self, ingro, outgro, nptmdp, intop="topol", nt=4, restraints=False):
 
         if not restraints:
             mdp = nptmdp
@@ -105,8 +107,28 @@ class AutoRunMD :
         cmd1 = "gmx grompp -f %s -c %s -p %s -o %s -maxwarn 100" % (mdp, ingro, intop, outgro)
         self.run_suprocess(cmd1)
 
-        cmd2 = "gmx mdrun -deffnm %s -nt %d -v -gpu_id 0" % (outgro, nt)
+        cmd2 = "gmx mdrun -deffnm %s -nt %d -v -gpu_id 1" % (outgro, nt)
         self.run_suprocess(cmd2)
+
+        print("MD Simulation completed. ")
 
         return self
 
+    def run_app(self, inpdb, outname):
+
+        self.generate_top(inpdb, outgro=outname, top="topol")
+        self.add_box(ingro=outname, outgro="box_"+outname)
+        self.add_solvent(ingro="box_"+outname, outgro="wat_"+outname, )
+        self.add_ions(ingro="wat_"+outname, outgro="ion_"+outname)
+        self.minimize(ingro="ion_"+outname, outgro="em_"+outname)
+
+        self.md("em_"+outname, outgro="npt_"+outname)
+
+        return self
+
+if __name__ == "__main__":
+
+    inp = sys.argv[1]
+    out = sys.argv[2]
+
+    app = AutoRunMD(inp, out)
