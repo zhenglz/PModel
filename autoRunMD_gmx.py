@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 import os, sys
 from glob import glob
 import subprocess as sp
-
 
 class AutoRunMD :
 
@@ -22,7 +20,7 @@ class AutoRunMD :
     def generate_top(self, inpdb, ff="amber99sb-ildn", water='tip3p',
                      outgro="output", top="topol", ignh=True):
 
-        cmd = "gmx pdb2gmx -f % -o %s -p %s -ff %s -water %s " %\
+        cmd = "gmx pdb2gmx -f %s -o %s -p %s -ff %s -water %s " %\
               (inpdb, outgro, top, ff, water)
         if ignh: cmd += "-ignh "
 
@@ -50,7 +48,7 @@ class AutoRunMD :
         return self
 
     def add_box(self, ingro, outgro, ):
-        cmd = "editconf -f %s -o %s -c -d 1.2 -bt cubic" % (ingro, outgro)
+        cmd = "gmx editconf -f %s -o %s -c -d 1.2 -bt cubic" % (ingro, outgro)
 
         self.run_suprocess(cmd)
 
@@ -66,7 +64,7 @@ class AutoRunMD :
 
         return self
 
-    def add_ions(self, emmdp, ingro, outgro, intop="topol", ion_conc=0.15):
+    def add_ions(self, ingro, outgro, emmdp="em_sol.mdp", intop="topol", ion_conc=0.15):
         if not os.path.exists(emmdp):
             emmdp = os.path.join(self.PROJECT_ROOT, "data/em_sol.mdp")
 
@@ -81,7 +79,7 @@ class AutoRunMD :
 
         return self
 
-    def minimize(self, ingro, outgro, emmdp, intop="topol", nt=4):
+    def minimize(self, ingro, outgro, emmdp="em_sol.mdp", intop="topol", nt=4):
         if not os.path.exists(emmdp):
             emmdp = os.path.join(self.PROJECT_ROOT, "data/em_sol.mdp")
 
@@ -93,7 +91,7 @@ class AutoRunMD :
 
         return self
 
-    def md(self, ingro, outgro, nptmdp, intop="topol", nt=4, restraints=False):
+    def md(self, ingro, outgro, nptmdp="npt.mdp", intop="topol", nt=4, restraints=False):
 
         if not restraints:
             mdp = nptmdp
@@ -131,4 +129,5 @@ if __name__ == "__main__":
     inp = sys.argv[1]
     out = sys.argv[2]
 
-    app = AutoRunMD(inp, out)
+    app = AutoRunMD()
+    app.run_app(inp, out)
