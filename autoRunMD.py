@@ -96,6 +96,7 @@ def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
 
         if add_hydrogens:
             pdb.addHydrogens(forcefield)
+            pdb.addExtraParticles(forcefield)
 
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
                                          nonbondedCutoff=1*u.nanometer, constraints=HBonds,
@@ -112,6 +113,7 @@ def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
         # add hydrogen atoms when necessary
         if add_hydrogens:
             modeller.addHydrogens(forcefield)
+            modeller.addExtraParticles(forcefield)
 
         modeller.addSolvent(forcefield, padding=1.0*u.nanometers, model="tip3p",
                             ionicStrength=0.15*u.molar, negativeIon="Cl-", positiveIon="Na+")
@@ -201,6 +203,9 @@ if __name__ == "__main__":
                         help="Input, int, optional. The simulation temperature, default is 300 K. ")
     parser.add_argument("--diherst", default=None, type=str,
                         help="Input, str, optional. Apply dihedral restraints to the system. ")
+    parser.add_argument("--addH", default=False, type=lambda x: (str(x).lower() == "true"),
+                        help="Input, bool, optional. Add hydrogen atoms to the initial structure. \n"
+                             "Default is False. ")
 
     args = parser.parse_args()
 
