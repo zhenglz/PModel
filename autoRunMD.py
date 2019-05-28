@@ -8,7 +8,6 @@ import argparse
 import os
 from argparse import RawDescriptionHelpFormatter
 
-
 class ParseConstraints:
 
     def __init__(self, cst_type="dihedral", filen="restraint.txt"):
