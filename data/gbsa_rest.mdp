@@ -12,7 +12,7 @@ nstlist             =  10
 nstlog              =  1000
 
 ; Neighbor searching
-cutoff-scheme       = group
+cutoff-scheme       =  Verlet
 rlist               =  5
 pbc                 =  no
 ns_type             =  simple
