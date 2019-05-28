@@ -86,6 +86,7 @@ def process_pdb(inp, ):
 
     return pdb
 
+
 def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
 
     # load force field
@@ -112,8 +113,16 @@ def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
 
         # add hydrogen atoms when necessary
         if add_hydrogens:
-            modeller.addExtraParticles(forcefield)
-            modeller.addHydrogens(forcefield)
+            try:
+                modeller.addExtraParticles(forcefield)
+                modeller.addHydrogens(forcefield)
+            except:
+                print("""If you encounter error in this pdb fix stage, you may wish to 
+                use gromacs based method to generate a energy minimized pdb structure.
+                
+                Usage: 
+                
+                """)
 
         modeller.addSolvent(forcefield, padding=1.0*u.nanometers, model="tip3p",
                             ionicStrength=0.15*u.molar, negativeIon="Cl-", positiveIon="Na+")
@@ -196,7 +205,7 @@ if __name__ == "__main__":
     parser.add_argument("--nsteps", default=10000000, type=int,
                         help="Input, int, optional. Number of simulation steps. A step is 0.002 ps.\n"
                              "Default is 10000000, which makes 20 ns.")
-    parser.add_argument("--gbsa", type=lambda x: (str(x).lower() == "true"), default=False,
+    parser.add_argument("--gbsa", default=False, type=lambda x: (str(x).lower() == "true"),
                         help="Input, bool, optional. Whether run implict GBSA simulation.\n"
                              "Default is True. ")
     parser.add_argument("--temperature", default=300, type=int,

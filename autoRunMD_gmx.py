@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import os, sys
-from glob import glob
 import subprocess as sp
+import argparse
+from argparse import RawDescriptionHelpFormatter
+
 
 class AutoRunMD :
 
@@ -96,11 +98,11 @@ class AutoRunMD :
         if not restraints:
             mdp = nptmdp
             if not os.path.exists(nptmdp):
-                mdp = os.path.join(self.PROJECT_ROOT, "data/npt.mdp")
+                mdp = os.path.join(self.PROJECT_ROOT+"/data/", nptmdp)
         else:
             mdp = "npt_rest.mdp"
             if not os.path.exists(mdp):
-                mdp = os.path.join(self.PROJECT_ROOT, "data/npt_rest.mdp")
+                mdp = os.path.join(self.PROJECT_ROOT+"/data/", mdp)
 
         cmd1 = "gmx grompp -f %s -c %s -p %s -o %s -maxwarn 100" % (mdp, ingro, intop, outgro)
         self.run_suprocess(cmd1)
@@ -112,7 +114,7 @@ class AutoRunMD :
 
         return self
 
-    def run_app(self, inpdb, outname, mode="solvated"):
+    def run_app(self, inpdb, outname, mode="solvated", production_run=True):
 
         if mode == "solvated":
             self.generate_top(inpdb, outgro=outname, top="topol")
@@ -121,21 +123,46 @@ class AutoRunMD :
             self.add_ions(ingro="wat_"+outname, outgro="ion_"+outname)
             self.minimize(ingro="ion_"+outname, outgro="em_"+outname)
 
-            self.md("em_"+outname, outgro="npt_"+outname)
+            if production_run:
+                self.md("em_"+outname, outgro="npt_"+outname, nptmdp="npt.mdp")
 
         elif mode == "gbsa":
             self.generate_top(inpdb, outgro=outname, top="topol")
             self.add_box(ingro=outname, outgro="box_"+outname)
             self.minimize(ingro="box_"+outname, outgro="em_"+outname, emmdp="em_sol.mdp")
-            mdp = os.path.join(self.PROJECT_ROOT, "data/gbsa.mdp")
-            self.md("em_"+outname, outgro="npt_"+outname, nptmdp=mdp)
+
+            if production_run:
+                mdp = os.path.join(self.PROJECT_ROOT, "data/gbsa.mdp")
+                self.md("em_"+outname, outgro="npt_"+outname, nptmdp=mdp)
 
         return self
 
 if __name__ == "__main__":
 
-    inp = sys.argv[1]
-    out = sys.argv[2]
+    d = """
+    Run gromacs simulation in one-liner.
+    """
+    parser = argparse.ArgumentParser(description="")
+    parser.add_argument("-f", type=str, default="input.pdb",
+                        help="Input, str. The input pdb file. Default is input.pdb")
+    parser.add_argument("-o", type=str, default="protein",
+                        help="Input, str, optional. The output file name pattern. \n"
+                             "Default is protein ")
+    parser.add_argument("-gbsa", type=lambda x: (str(x).lower() == "true"), default=False,
+                        help="Input, bool, optional. Run GBSA implict water simulation. \n"
+                             "Default is False. ")
+    parser.add_argument("-product", type=lambda x: (str(x).lower() == "true"), default=True,
+                        help="Input, bool, optional. Run production MD simulations. \n"
+                             "Default is True. ")
+
+    args = parser.parse_args()
 
     app = AutoRunMD()
-    app.run_app(inp, out, 'gbsa')
+
+    if args.gbsa:
+        mode = "gbsa"
+    else:
+        mode = "solvated"
+
+    app.run_app(inpdb=args.f, outname=args.o, gbsa=mode, production_run=args.product)
+
