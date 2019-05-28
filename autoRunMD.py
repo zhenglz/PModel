@@ -80,17 +80,22 @@ def dihedral_restraints(rst="restraints.txt", use_cols=[0, 1, 2, 3, -3, -1], rst
     return restraints.forces
 
 
-def process_pdb(inp, addH=False, ):
+def process_pdb(inp, ):
     # read in a pdb file
     pdb = PDBFile(inp)
 
     return pdb
 
-def prepare_system(pdb, gbsa=False, add_forces=None):
+def prepare_system(pdb, gbsa=False, add_forces=None, add_hydrogens=False):
+
+    # load force field
+    forcefield = ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
 
     if gbsa:
+        pdb = Modeller(pdb.topology, pdb.positions)
 
-        forcefield = ForceField('amber14-all.xml') #, 'amber14/tip3pfb.xml')
+        if add_hydrogens:
+            pdb.addHydrogens(forcefield)
 
         system = forcefield.createSystem(pdb.topology, nonbondedMethod=PME,
                                          nonbondedCutoff=1*u.nanometer, constraints=HBonds,
@@ -102,10 +107,12 @@ def prepare_system(pdb, gbsa=False, add_forces=None):
         return system, pdb
 
     else:
-        # load force field
-        forcefield = ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
-
         modeller = Modeller(pdb.topology, pdb.positions)
+
+        # add hydrogen atoms when necessary
+        if add_hydrogens:
+            modeller.addHydrogens(forcefield)
+
         modeller.addSolvent(forcefield, padding=1.0*u.nanometers, model="tip3p",
                             ionicStrength=0.15*u.molar, negativeIon="Cl-", positiveIon="Na+")
 
@@ -144,14 +151,16 @@ def run_NPT(pdb, system, out, log, nsteps, temperature, gbsa=True):
     simulation.minimizeEnergy()
 
     # output information
-    simulation.reporters.append(PDBReporter(out, 1000))
-    simulation.reporters.append(StateDataReporter(log, 1000, step=True,
+    simulation.reporters.append(PDBReporter(out, 5000))
+    simulation.reporters.append(StateDataReporter(log, 500, step=True,
                                 potentialEnergy=True, temperature=True,
                                 density=True, progress=True,
                                 remainingTime=True, speed=True,
                                 totalSteps=nsteps))
+    simulation.reporters.append(CheckpointReporter('checkpoint.chk', 50000))
 
     simulation.step(nsteps)
+    #simulation.saveState("state.xml")
 
     print("Simulation completed!")
 
