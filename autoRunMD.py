@@ -166,6 +166,10 @@ def run_NPT(pdb, system, out, log, nsteps, temperature, gbsa=True):
 
 if __name__ == "__main__":
     d = """A simple peptide simulation function with OpenMM.
+    After you have a protein or peptide 3D conformation model, if you 
+    would like to refine it, you could run a simple MD simulation for 
+    multiple independent repeats.
+    
     Examples:
         
         >>> # run a quick MD simulation
