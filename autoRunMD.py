@@ -223,7 +223,7 @@ if __name__ == "__main__":
         forces = None
 
     # prepare the system
-    system, pdb = prepare_system(pdb, gbsa=args.gbsa, add_forces=forces)
+    system, pdb = prepare_system(pdb, gbsa=args.gbsa, add_forces=forces, add_hydrogens=args.addH)
 
     # run NVT simulations
     run_NPT(pdb, system=system, out=args.pdbout, log=args.logfile,
