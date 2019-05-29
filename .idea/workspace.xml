@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3172e7c-6721-48c1-a3d8-c72b58b71986" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/PModel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PModel.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoRunMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoRunMD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoRunMD_gmx.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoRunMD_gmx.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,14 +21,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/autoRunMD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1427">
-              <caret line="125" column="16" lean-forward="true" selection-start-line="125" selection-start-column="16" selection-end-line="125" selection-end-column="16" />
+            <state relative-caret-position="451">
+              <caret line="207" column="89" selection-start-line="207" selection-start-column="89" selection-end-line="207" selection-end-column="89" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-                <element signature="e#297#2155#0" />
               </folding>
             </state>
           </provider>
@@ -41,10 +36,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/autoRunMD_gmx.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2006">
-              <caret line="118" column="65" selection-start-line="118" selection-start-column="65" selection-end-line="118" selection-end-column="65" />
+            <state relative-caret-position="-832">
+              <caret line="116" selection-start-line="116" selection-end-line="116" />
               <folding>
                 <element signature="e#23#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/select_center_models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="490">
+              <caret line="79" column="34" selection-start-line="79" selection-start-column="34" selection-end-line="79" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,6 +128,7 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/autoRunMD.py" />
         <option value="$PROJECT_DIR$/autoRunMD_gmx.py" />
+        <option value="$PROJECT_DIR$/select_center_models.py" />
       </list>
     </option>
   </component>
@@ -215,7 +223,8 @@
     <MESSAGE value="update mdp" />
     <MESSAGE value="add missing atoms" />
     <MESSAGE value="add argument parser to gmx md" />
-    <option name="LAST_COMMIT_MESSAGE" value="add argument parser to gmx md" />
+    <MESSAGE value="add docstring for run_app method" />
+    <option name="LAST_COMMIT_MESSAGE" value="add docstring for run_app method" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/simtk/__init__.py">
@@ -322,23 +331,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/autoRunMD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="207" column="89" selection-start-line="207" selection-start-column="89" selection-end-line="207" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/autoRunMD_gmx.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="118" column="65" selection-start-line="118" selection-start-column="65" selection-end-line="118" selection-end-column="65" />
+        <state relative-caret-position="-832">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
           <folding>
             <element signature="e#23#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/autoRunMD.py">
+    <entry file="file://$PROJECT_DIR$/select_center_models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1427">
-          <caret line="125" column="16" lean-forward="true" selection-start-line="125" selection-start-column="16" selection-end-line="125" selection-end-column="16" />
+        <state relative-caret-position="490">
+          <caret line="79" column="34" selection-start-line="79" selection-start-column="34" selection-end-line="79" selection-end-column="34" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <element signature="e#297#2155#0" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
